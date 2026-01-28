@@ -1,105 +1,102 @@
 (function () {
   "use strict";
 
-  // Single place to control page behavior across ALL paid briefs
-  const SETTINGS = {
-    disableRightClick: true,
-    blockShortcuts: true,
-    // If you want printing allowed later, set this to false.
-    blockPrint: true,
-    // If you want view-source allowed later, set this to false.
-    blockViewSource: true,
-  };
+  // ----- Config -----
+  const DEFAULT_BRIEF = "filtering-failure";
 
-  function applyGuards() {
-    if (SETTINGS.disableRightClick) {
-      document.addEventListener("contextmenu", (e) => e.preventDefault());
-    }
-
-    if (SETTINGS.blockShortcuts) {
-      document.addEventListener("keydown", (e) => {
-        const key = (e.key || "").toLowerCase();
-        const mod = e.ctrlKey || e.metaKey;
-
-        if (!mod) return;
-
-        // Always block Save/Copy
-        if (key === "s" || key === "c") e.preventDefault();
-
-        // Conditional blocks
-        if (SETTINGS.blockViewSource && key === "u") e.preventDefault();
-        if (SETTINGS.blockPrint && key === "p") e.preventDefault();
-      });
-    }
+  // ----- Helpers -----
+  function qs(id) {
+    return document.getElementById(id);
   }
 
   function getBriefKey() {
     const params = new URLSearchParams(window.location.search);
-    return (params.get("brief") || "filtering-failure").trim();
+    const raw = (params.get("brief") || DEFAULT_BRIEF).trim();
+    // basic sanitization: allow letters, numbers, dash only
+    const safe = raw.toLowerCase().replace(/[^a-z0-9-]/g, "");
+    return safe || DEFAULT_BRIEF;
   }
 
   function loadBriefScript(key) {
     return new Promise((resolve, reject) => {
       const s = document.createElement("script");
       s.src = `./briefs/${encodeURIComponent(key)}.js`;
-      s.onload = resolve;
-      s.onerror = () => reject(new Error(`Brief not found: ${key}`));
+      s.async = true;
+
+      s.onload = () => resolve();
+      s.onerror = () => reject(new Error(`Could not load: ${s.src}`));
+
       document.head.appendChild(s);
     });
   }
 
-  function render(brief) {
-    // Header fields
-    document.title = `${brief.title} – Decision Brief`;
-    document.getElementById("pageTitle").textContent = brief.title;
-    document.getElementById("pageSub").textContent = brief.subheading || "";
-    document.getElementById("pageNote").textContent = brief.note || "";
+  function setText(el, value) {
+    if (!el) return;
+    el.textContent = value == null ? "" : String(value);
+  }
 
-    // Summary card
-    const summaryCard = document.getElementById("summaryCard");
-    if (brief.summary || brief.objective) {
-      summaryCard.hidden = false;
-      document.getElementById("summaryLine").innerHTML = brief.summary || "";
-      document.getElementById("objectiveLine").innerHTML = brief.objective || "";
-    }
+  function renderError(key, err) {
+    setText(qs("pageTitle"), "Link error");
+    setText(qs("pageSub"), "This brief could not be loaded.");
+    setText(qs("pageNote"), `Requested brief: ${key}`);
 
-    // Body sections
-    const content = document.getElementById("content");
-    content.innerHTML = "";
-
-    (brief.sections || []).forEach((sec) => {
-      const el = document.createElement("section");
-      el.className = "section" + (sec.divider ? " divider" : "");
-      el.innerHTML = `
-        <h2>${sec.heading}</h2>
-        ${sec.html || ""}
+    const content = qs("content");
+    if (content) {
+      content.innerHTML = `
+        <div class="card">
+          <p><strong>Something went wrong.</strong></p>
+          <p>Check that <code>/paid/briefs/${key}.js</code> exists and that it registers content.</p>
+        </div>
       `;
-      content.appendChild(el);
-    });
-
-    // Footer
-    if (brief.footerNote) {
-      document.getElementById("footerNote").textContent = brief.footerNote;
     }
+
+    // leave a breadcrumb in DevTools
+    console.error(err);
   }
 
-  async function init() {
-    applyGuards();
+  function renderBrief(brief) {
+    setText(qs("kicker"), brief.kicker || "Decision Brief");
+    setText(qs("pageTitle"), brief.title || "Decision Brief");
+    setText(qs("pageSub"), brief.sub || "");
+    setText(qs("pageNote"), brief.note || "");
 
+    // Optional summary card
+    const summaryCard = qs("summaryCard");
+    const summaryLine = qs("summaryLine");
+    const objectiveLine = qs("objectiveLine");
+
+    const hasSummary = !!(brief.summary || brief.objective);
+    if (summaryCard) summaryCard.hidden = !hasSummary;
+
+    setText(summaryLine, brief.summary || "");
+    setText(objectiveLine, brief.objective || "");
+
+    // Main content
+    const content = qs("content");
+    if (content) content.innerHTML = brief.bodyHtml || "<p>No content found.</p>";
+  }
+
+  async function main() {
     const key = getBriefKey();
+
     try {
+      // Load the brief file which registers itself to window.PAID_BRIEFS
       await loadBriefScript(key);
-      if (!window.PAID_BRIEF) throw new Error("PAID_BRIEF not defined.");
-      render(window.PAID_BRIEF);
+
+      const registry = window.PAID_BRIEFS || {};
+      const brief = registry[key];
+
+      if (!brief) {
+        throw new Error(
+          `Brief "${key}" loaded but did not register. Expected window.PAID_BRIEFS["${key}"]`
+        );
+      }
+
+      renderBrief(brief);
     } catch (err) {
-      document.getElementById("pageTitle").textContent = "Brief not available";
-      document.getElementById("pageSub").textContent =
-        "This link may be incorrect, expired, or missing the referenced brief.";
-      document.getElementById("content").innerHTML =
-        `<section class="section"><p><strong>Error:</strong> ${err.message}</p></section>`;
+      renderError(key, err);
     }
   }
 
-  init();
+  document.addEventListener("DOMContentLoaded", main);
 })();
-
