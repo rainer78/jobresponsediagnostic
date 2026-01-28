@@ -14,16 +14,21 @@
   const resultTitle = document.getElementById("resultTitle");
   const resultContent = document.getElementById("resultContent");
 
-  // OPTIONAL: set these once when you have payment links
-  const PAID_NEXT_MOVE_URL = "#"; // e.g., Stripe/Gumroad link for $25
-  const AUDIT_URL = "#";          // e.g., Stripe/Gumroad link for $99
+ // PAID CTA (set dynamically after result selection)
+const nextMoveBtn = document.getElementById("nextMoveCta");
 
-  // Wire CTA links if present
-  const nextMoveBtn = document.querySelector(".paid-pivot .primary-cta");
-  if (nextMoveBtn) nextMoveBtn.setAttribute("href", PAID_NEXT_MOVE_URL);
+// Stripe links per brief (they must pay first)
+const STRIPE_LINKS = {
+  "filtering-failure": "https://buy.stripe.com/REPLACE_FILTERING",
+  "premature-disqualification": "https://buy.stripe.com/REPLACE_PREMATURE",
+  "interview-drift": "https://buy.stripe.com/REPLACE_INTERVIEW",
+  "conversion-breakdown": "https://buy.stripe.com/REPLACE_CONVERSION",
+  "search-exhaustion": "https://buy.stripe.com/REPLACE_EXHAUSTION"
+};
 
-  const auditBtn = document.querySelector(".audit .secondary-cta");
-  if (auditBtn) auditBtn.setAttribute("href", AUDIT_URL);
+// Audit CTA can still be static
+const auditBtn = document.querySelector(".audit .secondary-cta");
+if (auditBtn) auditBtn.setAttribute("href", "#"); // or your $99 link
 
   // FREE result content (HTML strings)
   const RESULTS = {
