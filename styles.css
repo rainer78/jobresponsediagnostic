@@ -1,3 +1,8 @@
+
+html {
+  scroll-behavior: smooth;
+}
+
 /* =========================
    Base + Reset
 ========================== */
@@ -321,6 +326,21 @@ form input[type="radio"] {
   max-width: 720px;
   line-height: 1.6;
 }
+
+.backLink {
+  margin-top: 8px;
+}
+
+.backLink a {
+  font-size: 0.95rem;
+  text-decoration: underline;
+  opacity: 0.85;
+}
+
+.backLink a:hover {
+  opacity: 1;
+}
+
 
 /* =========================
    JOB Diagnostic Form
