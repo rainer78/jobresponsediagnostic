@@ -3,7 +3,7 @@
    - Reads selected radio option
    - Injects the matching FREE result copy
    - Reveals the result section and scrolls to it
-   - (Optional) sets your paid links in one place
+   - Sets paid link dynamically based on selected result
 */
 
 (function () {
@@ -14,33 +14,28 @@
   const resultTitle = document.getElementById("resultTitle");
   const resultContent = document.getElementById("resultContent");
 
- // PAID CTA (set dynamically after result selection)
-const nextMoveBtn = document.getElementById("nextMoveCta");
+  // PAID CTA (set dynamically after result selection)
+  const nextMoveBtn = document.getElementById("nextMoveCta");
 
-// Stripe links per brief (they must pay first)
-const STRIPE_LINKS = {
-  "filtering-failure": "https://buy.stripe.com/REPLACE_FILTERING",
-  "premature-disqualification": "https://buy.stripe.com/REPLACE_PREMATURE",
-  "interview-drift": "https://buy.stripe.com/REPLACE_INTERVIEW",
-  "conversion-breakdown": "https://buy.stripe.com/REPLACE_CONVERSION",
-  "search-exhaustion": "https://buy.stripe.com/REPLACE_EXHAUSTION"
-};
-   if (nextMoveBtn) {
-  nextMoveBtn.href = STRIPE_LINKS[key] || "#";
-  nextMoveBtn.classList.remove("is-disabled");
-  nextMoveBtn.setAttribute("aria-disabled", "false");
-}
+  // Stripe links per brief (they must pay first)
+  const STRIPE_LINKS = {
+    "filtering-failure": "https://buy.stripe.com/REPLACE_FILTERING",
+    "premature-disqualification": "https://buy.stripe.com/REPLACE_PREMATURE",
+    "interview-drift": "https://buy.stripe.com/REPLACE_INTERVIEW",
+    "conversion-breakdown": "https://buy.stripe.com/REPLACE_CONVERSION",
+    "search-exhaustion": "https://buy.stripe.com/REPLACE_EXHAUSTION"
+  };
 
-   if (nextMoveBtn) {
-  nextMoveBtn.classList.add("is-disabled");
-  nextMoveBtn.setAttribute("aria-disabled", "true");
-}
+  // Start disabled until a selection is made
+  if (nextMoveBtn) {
+    nextMoveBtn.href = "#";
+    nextMoveBtn.classList.add("is-disabled");
+    nextMoveBtn.setAttribute("aria-disabled", "true");
+  }
 
-
-
-// Audit CTA can still be static
-const auditBtn = document.querySelector(".audit .secondary-cta");
-if (auditBtn) auditBtn.setAttribute("href", "#"); // or your $99 link
+  // Audit CTA can still be static
+  const auditBtn = document.querySelector(".audit .secondary-cta");
+  if (auditBtn) auditBtn.setAttribute("href", "#"); // or your $99 link
 
   // FREE result content (HTML strings)
   const RESULTS = {
@@ -144,7 +139,7 @@ if (auditBtn) auditBtn.setAttribute("href", "#"); // or your $99 link
         <ul>
           <li>This is not bad timing</li>
           <li>This is not hidden competition</li>
-          <li>This is not “almost there”</li>
+          <li>This is not hidden competition</li>
         </ul>
         <p>Repeated near-misses indicate a <strong>closing problem</strong>, not a proximity one.</p>
 
@@ -199,10 +194,14 @@ if (auditBtn) auditBtn.setAttribute("href", "#"); // or your $99 link
     resultTitle.textContent = data.title;
     resultContent.innerHTML = data.html;
 
-    // Reveal result section
-    resultSection.classList.remove("hidden");
+    // ✅ Enable paid button + set correct Stripe link after selection
+    if (nextMoveBtn) {
+      nextMoveBtn.href = STRIPE_LINKS[key] || "#";
+      nextMoveBtn.classList.remove("is-disabled");
+      nextMoveBtn.setAttribute("aria-disabled", "false");
+    }
 
-    // Scroll to it (smooth if supported)
+    resultSection.classList.remove("hidden");
     resultSection.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
@@ -223,4 +222,3 @@ if (auditBtn) auditBtn.setAttribute("href", "#"); // or your $99 link
     showResult(value);
   });
 })();
-
