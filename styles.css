@@ -343,6 +343,23 @@ form input[type="radio"] {
 
 
 /* =========================
+   Adsense
+========================== */
+.adBreak { margin: 26px auto; }
+.adSlot {
+  border: 1px solid rgba(0,0,0,0.12);
+  border-radius: 12px;
+  padding: 14px;
+  background: rgba(0,0,0,0.02);
+  color: rgba(0,0,0,0.65);
+  font-size: 0.95rem;
+}
+.adSlot--leaderboard { text-align: center; }
+.adSlot--inline { max-width: 360px; }
+
+
+
+/* =========================
    JOB Diagnostic Form
 ========================== */
 /* Layout rhythm */
