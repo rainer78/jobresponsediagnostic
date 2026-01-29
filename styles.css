@@ -253,3 +253,10 @@ form input[type="radio"] {
   display: none;
 }
 
+.primary-cta.is-disabled {
+  opacity: 0.55;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+
