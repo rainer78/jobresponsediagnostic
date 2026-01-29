@@ -260,3 +260,29 @@ form input[type="radio"] {
 }
 
 
+/* =========================
+   FAQs
+========================== */
+.faq {
+  margin-top: 64px;
+}
+
+.faq h2 {
+  margin-bottom: 24px;
+}
+
+.faqItem {
+  margin-bottom: 20px;
+}
+
+.faqItem h3 {
+  font-size: 1.05rem;
+  margin-bottom: 6px;
+}
+
+.faqItem p {
+  max-width: 720px;
+  line-height: 1.6;
+}
+
+
