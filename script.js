@@ -31,6 +31,12 @@ const STRIPE_LINKS = {
   nextMoveBtn.setAttribute("aria-disabled", "false");
 }
 
+   if (nextMoveBtn) {
+  nextMoveBtn.classList.add("is-disabled");
+  nextMoveBtn.setAttribute("aria-disabled", "true");
+}
+
+
 
 // Audit CTA can still be static
 const auditBtn = document.querySelector(".audit .secondary-cta");
