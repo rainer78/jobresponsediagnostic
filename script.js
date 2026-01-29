@@ -19,7 +19,7 @@
 
   // Stripe links per brief (they must pay first)
   const STRIPE_LINKS = {
-    "filtering-failure": "https://buy.stripe.com/REPLACE_FILTERING",
+    "filtering-failure": "https://buy.stripe.com/4gMbJ2b3F6e34541zU9oc00",
     "premature-disqualification": "https://buy.stripe.com/REPLACE_PREMATURE",
     "interview-drift": "https://buy.stripe.com/REPLACE_INTERVIEW",
     "conversion-breakdown": "https://buy.stripe.com/REPLACE_CONVERSION",
