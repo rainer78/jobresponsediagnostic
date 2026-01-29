@@ -25,6 +25,12 @@ const STRIPE_LINKS = {
   "conversion-breakdown": "https://buy.stripe.com/REPLACE_CONVERSION",
   "search-exhaustion": "https://buy.stripe.com/REPLACE_EXHAUSTION"
 };
+   if (nextMoveBtn) {
+  nextMoveBtn.href = STRIPE_LINKS[key] || "#";
+  nextMoveBtn.classList.remove("is-disabled");
+  nextMoveBtn.setAttribute("aria-disabled", "false");
+}
+
 
 // Audit CTA can still be static
 const auditBtn = document.querySelector(".audit .secondary-cta");
