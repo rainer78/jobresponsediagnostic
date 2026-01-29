@@ -38,154 +38,339 @@
   if (auditBtn) auditBtn.setAttribute("href", "#"); // or your $99 link
 
   // FREE result content (HTML strings)
-  const RESULTS = {
-    "filtering-failure": {
-      title: "Filtering Failure",
-      html: `
-        <p><strong>What this result means</strong></p>
-        <p>Your applications are likely being filtered out <strong>before a human ever sees them</strong>.</p>
-        <p>This happens when qualified candidates rely on channels that are too crowded to transmit meaningful signal. The system is not evaluating you inaccurately; it is not evaluating you at all.</p>
-        <p>This is one of the most common failure modes in online hiring, especially during periods of high applicant volume.</p>
+const RESULTS = {
+  "filtering-failure": {
+    title: "Filtering Failure",
+    html: `
+      <article class="resultDoc" aria-label="Result: Filtering Failure">
 
-        <p><strong>What this is not</strong></p>
-        <ul>
-          <li>This is not a lack of experience</li>
-          <li>This is not a resume “polish” problem</li>
-          <li>This is not a motivation or confidence issue</li>
-        </ul>
-        <p>If your background were fundamentally wrong, you would usually receive <strong>explicit rejections</strong>. Silence is a different signal.</p>
+        <header class="resultTop">
+          <h3 class="resultTitle">Filtering Failure</h3>
+          <p class="resultSummary">
+            Your applications are likely being filtered out <strong>before a human sees them</strong>.
+          </p>
+        </header>
 
-        <p><strong>What most people do next (and why it backfires)</strong></p>
-        <p>When people experience Filtering Failure, they usually respond by applying to more roles, tweaking resume keywords repeatedly, or waiting longer for replies before changing approach.</p>
-        <p>These actions <strong>increase exposure to the same filter</strong>, reinforcing the problem rather than solving it.</p>
+        <section class="resultBlock">
+          <h4>What this means</h4>
+          <p>
+            This happens when qualified candidates rely on channels that are too crowded to transmit meaningful signal.
+            The system is not evaluating you inaccurately; it is not evaluating you at all.
+          </p>
+          <p>
+            This is one of the most common failure modes in online hiring, especially during periods of high applicant volume.
+          </p>
+          <p class="resultLink">
+            <a href="#faq-no-response">Why do job applications get no response?</a>
+          </p>
+        </section>
 
-        <p><strong>The actual constraint</strong></p>
-        <p>Online job boards are optimized for <strong>risk reduction</strong>, not talent discovery. When volume spikes, the system favors familiar titles, linear career paths, and predictable role matches.</p>
+        <section class="resultBlock">
+          <h4>What this is not</h4>
+          <ul>
+            <li>This is not a lack of experience.</li>
+            <li>This is not a resume “polish” problem.</li>
+            <li>This is not a motivation or confidence issue.</li>
+          </ul>
+          <p>
+            If your background were fundamentally wrong, you would usually receive <strong>explicit rejections</strong>.
+            Silence is a different signal.
+          </p>
+        </section>
 
-        <p><strong>What matters now</strong></p>
-        <p>At this stage, effort is not your bottleneck. <strong>Signal routing is.</strong></p>
-        <p>There is a correct next move that changes whether a human sees you at all.</p>
-      `
-    },
+        <section class="resultBlock">
+          <h4>What most people do next (and why it backfires)</h4>
+          <p>
+            People usually apply to more roles, tweak resume keywords repeatedly, or wait longer for replies before changing approach.
+          </p>
+          <p>
+            These actions <strong>increase exposure to the same filter</strong>, reinforcing the problem rather than solving it.
+          </p>
+        </section>
 
-    "premature-disqualification": {
-      title: "Premature Disqualification",
-      html: `
-        <p><strong>What this result means</strong></p>
-        <p>Your applications are being <strong>screened out very early</strong>, often within minutes or hours.</p>
-        <p>This usually happens when your profile triggers automatic exclusion rules. The system is not weighing your strengths; it is rejecting based on perceived mismatch or risk.</p>
-        <p>Unlike silence, early rejection means <strong>your application is being processed</strong>, just not favorably.</p>
+        <section class="resultBlock">
+          <h4>The actual constraint</h4>
+          <p>
+            Online job boards are optimized for <strong>risk reduction</strong>, not talent discovery.
+            When volume spikes, the system favors familiar titles, linear career paths, and predictable role matches.
+          </p>
+        </section>
 
-        <p><strong>What this is not</strong></p>
-        <ul>
-          <li>This is not a lack of intelligence or capability</li>
-          <li>This is not a failure to “sell yourself harder”</li>
-          <li>This is not something more applications will fix</li>
-        </ul>
-        <p>Fast rejection indicates a <strong>classification problem</strong>, not an effort problem.</p>
+        <section class="resultCallout" aria-label="What matters now">
+          <h4>What matters now</h4>
+          <p>
+            Effort is not your bottleneck. <strong>Signal routing is.</strong>
+          </p>
+          <p>
+            There is a correct next move that changes whether a human sees you at all.
+          </p>
+        </section>
 
-        <p><strong>What most people do next (and why it backfires)</strong></p>
-        <p>Most people respond by lowering standards and applying broadly, adding keywords to appear “more qualified,” or rewriting resumes to sound more impressive.</p>
-        <p>These actions increase <strong>classification confusion</strong>, making rejection faster and more consistent.</p>
+      </article>
+    `
+  },
 
-        <p><strong>The actual constraint</strong></p>
-        <p>Automated screening systems favor <strong>clear, narrow matches</strong>. If your background spans adjacent roles, mixed seniority signals, or transferable skills, you are more likely to be rejected early, even when qualified.</p>
+  "premature-disqualification": {
+    title: "Premature Disqualification",
+    html: `
+      <article class="resultDoc" aria-label="Result: Premature Disqualification">
 
-        <p><strong>What matters now</strong></p>
-        <p>The issue is not depth. It’s <strong>positioning precision</strong>.</p>
-        <p>There is a specific adjustment that reduces early rejection and improves downstream evaluation.</p>
-      `
-    },
+        <header class="resultTop">
+          <h3 class="resultTitle">Premature Disqualification</h3>
+          <p class="resultSummary">
+            Your applications are being <strong>screened out very early</strong>, often within minutes or hours.
+          </p>
+        </header>
 
-    "interview-drift": {
-      title: "Interview Drift",
-      html: `
-        <p><strong>What this result means</strong></p>
-        <p>You are passing initial screens and reaching interviews, but the process <strong>loses momentum</strong>.</p>
-        <p>This usually indicates that interviewers understand your competence, but not your <strong>specific value</strong> in the role they are hiring for.</p>
-        <p>You are not failing interviews. You are failing to <strong>anchor a decision</strong>.</p>
+        <section class="resultBlock">
+          <h4>What this means</h4>
+          <p>
+            This usually happens when your profile triggers automatic exclusion rules.
+            The system is not weighing your strengths; it is rejecting based on perceived mismatch or risk.
+          </p>
+          <p>
+            Unlike silence, early rejection means <strong>your application is being processed</strong>, just not favorably.
+          </p>
+          <p class="resultLink">
+            <a href="#faq-automatic-rejection">Are job applications rejected automatically?</a>
+          </p>
+        </section>
 
-        <p><strong>What this is not</strong></p>
-        <ul>
-          <li>This is not poor communication</li>
-          <li>This is not interview nerves</li>
-          <li>This is not “culture fit” in the casual sense</li>
-        </ul>
-        <p>If you were fundamentally misaligned, you would not progress at all.</p>
+        <section class="resultBlock">
+          <h4>What this is not</h4>
+          <ul>
+            <li>This is not a lack of intelligence or capability.</li>
+            <li>This is not a failure to “sell yourself harder.”</li>
+            <li>This is not something more applications will fix.</li>
+          </ul>
+          <p>
+            Fast rejection indicates a <strong>classification problem</strong>, not an effort problem.
+          </p>
+        </section>
 
-        <p><strong>What most people do next (and why it backfires)</strong></p>
-        <p>People often respond by over-preparing answers, studying interview frameworks, or trying to sound more confident or enthusiastic.</p>
-        <p>This adds polish without adding <strong>decision clarity</strong>.</p>
+        <section class="resultBlock">
+          <h4>What most people do next (and why it backfires)</h4>
+          <p>
+            Many people lower standards and apply broadly, add keywords to appear “more qualified,” or rewrite resumes to sound more impressive.
+          </p>
+          <p>
+            These actions increase <strong>classification confusion</strong>, making rejection faster and more consistent.
+          </p>
+        </section>
 
-        <p><strong>The actual constraint</strong></p>
-        <p>Hiring teams need to answer one question: <strong>“Why this person for this role right now?”</strong></p>
-        <p>If that answer remains fuzzy, the process stalls, even when interviews go well.</p>
+        <section class="resultBlock">
+          <h4>The actual constraint</h4>
+          <p>
+            Automated screening favors <strong>clear, narrow matches</strong>.
+            If your background spans adjacent roles, mixed seniority signals, or transferable skills, you are more likely to be rejected early, even when qualified.
+          </p>
+        </section>
 
-        <p><strong>What matters now</strong></p>
-        <p>You don’t need broader answers. You need a <strong>clear positioning spine</strong> that interviewers can remember and defend.</p>
-        <p>There is a way to re-anchor interviews so momentum returns.</p>
-      `
-    },
+        <section class="resultCallout" aria-label="What matters now">
+          <h4>What matters now</h4>
+          <p>
+            The issue is not depth. It’s <strong>positioning precision</strong>.
+          </p>
+          <p>
+            There is a specific adjustment that reduces early rejection and improves downstream evaluation.
+          </p>
+        </section>
 
-    "conversion-breakdown": {
-      title: "Conversion Breakdown",
-      html: `
-        <p><strong>What this result means</strong></p>
-        <p>Recruiters or hiring teams express interest, but nothing converts into an offer.</p>
-        <p>This usually means you are seen as <strong>viable</strong>, but not <strong>necessary</strong>.</p>
-        <p>Interest without commitment is a signal that differentiation is missing at the final decision point.</p>
+      </article>
+    `
+  },
 
-        <p><strong>What this is not</strong></p>
-        <ul>
-          <li>This is not bad timing</li>
-          <li>This is not hidden competition</li>
-          <li>This is not hidden competition</li>
-        </ul>
-        <p>Repeated near-misses indicate a <strong>closing problem</strong>, not a proximity one.</p>
+  "interview-drift": {
+    title: "Interview Drift",
+    html: `
+      <article class="resultDoc" aria-label="Result: Interview Drift">
 
-        <p><strong>What most people do next (and why it backfires)</strong></p>
-        <p>Most people respond by accepting vague feedback, waiting for future openings, or assuming it will eventually click.</p>
-        <p>This delays correction and normalizes non-decision.</p>
+        <header class="resultTop">
+          <h3 class="resultTitle">Interview Drift</h3>
+          <p class="resultSummary">
+            You reach interviews, but the process <strong>loses momentum</strong> before decisions are made.
+          </p>
+        </header>
 
-        <p><strong>The actual constraint</strong></p>
-        <p>Final hiring decisions are comparative. If your value is not clearly distinct at the moment of choice, the safest option usually wins, even if it’s less capable.</p>
+        <section class="resultBlock">
+          <h4>What this means</h4>
+          <p>
+            Interviewers may understand your competence, but not your <strong>specific value</strong> in the role they are hiring for.
+            You are not failing interviews. You are failing to <strong>anchor a decision</strong>.
+          </p>
+        </section>
 
-        <p><strong>What matters now</strong></p>
-        <p>You don’t need more interviews. You need a <strong>decisive contrast</strong> at the point of selection.</p>
-        <p>There is a correct way to shift how final decisions are framed.</p>
-      `
-    },
+        <section class="resultBlock">
+          <h4>What this is not</h4>
+          <ul>
+            <li>This is not poor communication.</li>
+            <li>This is not interview nerves.</li>
+            <li>This is not “culture fit” in the casual sense.</li>
+          </ul>
+          <p>
+            If you were fundamentally misaligned, you would not progress at all.
+          </p>
+        </section>
 
-    "search-exhaustion": {
-      title: "Search Exhaustion",
-      html: `
-        <p><strong>What this result means</strong></p>
-        <p>You have reduced or stopped applying because the process feels pointless.</p>
-        <p>This is not disengagement. It is a <strong>rational response</strong> to repeated negative feedback loops.</p>
-        <p>When effort stops producing signal, the system trains people to conserve energy.</p>
+        <section class="resultBlock">
+          <h4>What most people do next (and why it backfires)</h4>
+          <p>
+            People often over-prepare answers, study frameworks, or try to sound more confident or enthusiastic.
+          </p>
+          <p>
+            This adds polish without adding <strong>decision clarity</strong>.
+          </p>
+        </section>
 
-        <p><strong>What this is not</strong></p>
-        <ul>
-          <li>This is not laziness</li>
-          <li>This is not lack of ambition</li>
-          <li>This is not fear of rejection</li>
-        </ul>
-        <p>This is what happens when success criteria are unclear for too long.</p>
+        <section class="resultBlock">
+          <h4>The actual constraint</h4>
+          <p>
+            Hiring teams need to answer one question: <strong>“Why this person for this role right now?”</strong>
+            If that answer stays fuzzy, the process stalls, even when interviews go well.
+          </p>
+        </section>
 
-        <p><strong>What most people do next (and why it backfires)</strong></p>
-        <p>People often respond by taking long breaks without strategy changes, consuming motivational content, or waiting to “feel ready again.”</p>
-        <p>None of these restore traction.</p>
+        <section class="resultCallout" aria-label="What matters now">
+          <h4>What matters now</h4>
+          <p>
+            You need a <strong>clear positioning spine</strong> that interviewers can remember and defend.
+          </p>
+          <p>
+            There is a way to re-anchor interviews so momentum returns.
+          </p>
+        </section>
 
-        <p><strong>The actual constraint</strong></p>
-        <p>Momentum doesn’t return through motivation. It returns through <strong>predictable feedback</strong>.</p>
-        <p>Without a visible signal that effort leads somewhere, the system shuts down engagement.</p>
+      </article>
+    `
+  },
 
-        <p><strong>What matters now</strong></p>
-        <p>The priority is not intensity. It’s <strong>re-establishing a reliable response signal</strong>.</p>
-        <p>There is a way to re-enter the process without restarting the entire search.</p>
-      `
-    }
-  };
+  "conversion-breakdown": {
+    title: "Conversion Breakdown",
+    html: `
+      <article class="resultDoc" aria-label="Result: Conversion Breakdown">
+
+        <header class="resultTop">
+          <h3 class="resultTitle">Conversion Breakdown</h3>
+          <p class="resultSummary">
+            You get interest, but nothing converts into an offer because you are seen as <strong>viable</strong>, not <strong>necessary</strong>.
+          </p>
+        </header>
+
+        <section class="resultBlock">
+          <h4>What this means</h4>
+          <p>
+            Interest without commitment is a signal that differentiation is missing at the final decision point.
+          </p>
+        </section>
+
+        <section class="resultBlock">
+          <h4>What this is not</h4>
+          <ul>
+            <li>This is not bad timing.</li>
+            <li>This is not hidden competition.</li>
+            <li>This is not something that will “eventually click” without a change.</li>
+          </ul>
+          <p>
+            Repeated near-misses indicate a <strong>closing problem</strong>, not a proximity one.
+          </p>
+        </section>
+
+        <section class="resultBlock">
+          <h4>What most people do next (and why it backfires)</h4>
+          <p>
+            Many people accept vague feedback, wait for future openings, or assume the next round will be different.
+          </p>
+          <p>
+            This delays correction and normalizes non-decision.
+          </p>
+        </section>
+
+        <section class="resultBlock">
+          <h4>The actual constraint</h4>
+          <p>
+            Final hiring decisions are comparative.
+            If your value is not clearly distinct at the moment of choice, the safest option usually wins, even if it’s less capable.
+          </p>
+        </section>
+
+        <section class="resultCallout" aria-label="What matters now">
+          <h4>What matters now</h4>
+          <p>
+            You don’t need more interviews. You need a <strong>decisive contrast</strong> at the point of selection.
+          </p>
+          <p>
+            There is a correct way to shift how final decisions are framed.
+          </p>
+        </section>
+
+      </article>
+    `
+  },
+
+  "search-exhaustion": {
+    title: "Search Exhaustion",
+    html: `
+      <article class="resultDoc" aria-label="Result: Search Exhaustion">
+
+        <header class="resultTop">
+          <h3 class="resultTitle">Search Exhaustion</h3>
+          <p class="resultSummary">
+            You slowed down because the process stopped producing signal, not because you “gave up.”
+          </p>
+        </header>
+
+        <section class="resultBlock">
+          <h4>What this means</h4>
+          <p>
+            This is a <strong>rational response</strong> to repeated negative feedback loops.
+            When effort stops producing signal, people conserve energy.
+          </p>
+        </section>
+
+        <section class="resultBlock">
+          <h4>What this is not</h4>
+          <ul>
+            <li>This is not laziness.</li>
+            <li>This is not lack of ambition.</li>
+            <li>This is not fear of rejection.</li>
+          </ul>
+          <p>
+            This is what happens when success criteria stay unclear for too long.
+          </p>
+        </section>
+
+        <section class="resultBlock">
+          <h4>What most people do next (and why it backfires)</h4>
+          <p>
+            People take long breaks without changing strategy, consume motivational content, or wait to “feel ready again.”
+          </p>
+          <p>
+            None of these restore traction.
+          </p>
+        </section>
+
+        <section class="resultBlock">
+          <h4>The actual constraint</h4>
+          <p>
+            Momentum doesn’t return through motivation. It returns through <strong>predictable feedback</strong>.
+            Without visible signal that effort leads somewhere, engagement shuts down.
+          </p>
+        </section>
+
+        <section class="resultCallout" aria-label="What matters now">
+          <h4>What matters now</h4>
+          <p>
+            The priority is not intensity. It’s <strong>re-establishing a reliable response signal</strong>.
+          </p>
+          <p>
+            There is a way to re-enter the process without restarting the entire search.
+          </p>
+        </section>
+
+      </article>
+    `
+  }
+};
 
   function showResult(key) {
     const data = RESULTS[key];
