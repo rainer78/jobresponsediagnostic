@@ -200,6 +200,43 @@ form input[type="radio"] {
   margin-top: 0.5rem;
 }
 
+/* Result hierarchy */
+.resultDoc { margin-top: 10px; }
+.resultTop { margin-bottom: 18px; }
+.resultTitle { font-size: 1.25rem; margin: 0 0 6px; }
+.resultSummary { margin: 0; opacity: .92; line-height: 1.5; }
+
+.resultBlock {
+  margin: 16px 0;
+  padding-top: 2px;
+}
+
+.resultBlock h4 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.resultBlock p { margin: 0 0 10px; line-height: 1.65; }
+.resultBlock ul { margin: 8px 0 0 18px; }
+.resultBlock li { margin: 6px 0; }
+
+.resultCallout {
+  margin-top: 18px;
+  padding: 14px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+}
+
+.resultCallout h4 { margin: 0 0 8px; }
+.resultCallout p { margin: 0 0 8px; }
+.resultCallout p:last-child { margin-bottom: 0; }
+
+.resultLink { margin-top: 8px; }
+.resultLink a { text-decoration: underline; }
+
+
 /* =========================
    What You Get
 ========================== */
