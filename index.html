@@ -58,50 +58,71 @@
     <div class="container">
       <div class="card">
 
-        <header class="card-header">
-          <h2>Job Application Response Diagnostic</h2>
-          <p class="meta">30 seconds · no email · immediate result</p>
-        </header>
+       <header class="card-header">
+  <h2 id="diagTitle">Job Application Response Diagnostic</h2>
+  <p class="meta" id="diagMeta">30 seconds · no email · immediate result</p>
+</header>
 
-        <form id="diagnosticForm">
+<form id="diagnosticForm" aria-labelledby="diagTitle" aria-describedby="diagMeta diagHelp">
 
-          <fieldset>
-            <legend>
-              After you apply for jobs online, what usually happens next?
-            </legend>
+  <p class="help" id="diagHelp">
+    Choose the option that best matches what reliably happens after you apply.
+  </p>
 
-            <label>
-              <input type="radio" name="result" value="filtering-failure" />
-              I never hear anything back
-            </label>
+  <fieldset class="choices" role="radiogroup" aria-describedby="diagHelp diagError">
+    <legend class="legend">
+      After you apply for jobs online, what usually happens next?
+    </legend>
 
-            <label>
-              <input type="radio" name="result" value="premature-disqualification" />
-              I get rejected very quickly, often automatically
-            </label>
+    <label class="choice">
+      <input type="radio" name="result" value="filtering-failure" required />
+      <span class="choiceBody">
+        <span class="choiceTitle">I never hear anything back</span>
+        <span class="choiceHint">Silence after applying, even when you follow up.</span>
+      </span>
+    </label>
 
-            <label>
-              <input type="radio" name="result" value="interview-drift" />
-              I sometimes get interviews, but they stall or end early
-            </label>
+    <label class="choice">
+      <input type="radio" name="result" value="premature-disqualification" />
+      <span class="choiceBody">
+        <span class="choiceTitle">I get rejected very quickly, often automatically</span>
+        <span class="choiceHint">Same-day or next-day rejection with no details.</span>
+      </span>
+    </label>
 
-            <label>
-              <input type="radio" name="result" value="conversion-breakdown" />
-              Recruiters reach out, but nothing turns into an offer
-            </label>
+    <label class="choice">
+      <input type="radio" name="result" value="interview-drift" />
+      <span class="choiceBody">
+        <span class="choiceTitle">I sometimes get interviews, but they stall or end early</span>
+        <span class="choiceHint">Initial interest fades before you reach later rounds.</span>
+      </span>
+    </label>
 
-            <label>
-              <input type="radio" name="result" value="search-exhaustion" />
-              I’ve mostly stopped applying because it feels pointless
-            </label>
+    <label class="choice">
+      <input type="radio" name="result" value="conversion-breakdown" />
+      <span class="choiceBody">
+        <span class="choiceTitle">Recruiters reach out, but nothing turns into an offer</span>
+        <span class="choiceHint">You get traction, then the process dissolves.</span>
+      </span>
+    </label>
 
-          </fieldset>
+    <label class="choice">
+      <input type="radio" name="result" value="search-exhaustion" />
+      <span class="choiceBody">
+        <span class="choiceTitle">I’ve mostly stopped applying because it feels pointless</span>
+        <span class="choiceHint">You paused because the effort stopped paying off.</span>
+      </span>
+    </label>
 
-          <button type="submit" class="primary-cta">
-            See my result →
-          </button>
+    <p class="error" id="diagError" aria-live="polite"></p>
+  </fieldset>
 
-        </form>
+  <button type="submit" class="primary-cta" id="diagSubmit">
+    See my result →
+  </button>
+
+</form>
+
       </div>
     </div>
   </section>
